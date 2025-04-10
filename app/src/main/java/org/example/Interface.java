@@ -3,11 +3,9 @@ import java.util.Scanner;
 
 public class Interface {
     public char[] sQ;
-    private Scanner scanner;
     public Interface() {
         sQ = new char[9];
         resetBoard();
-        scanner = new Scanner(System.in);
     }
 
     public void resetBoard() {
@@ -24,34 +22,27 @@ public class Interface {
         System.out.println("\t\t" + sQ[6] + "\t" + "|" + "\t" + sQ[7] + "\t" + "|" + "\t" + sQ[8]);
     }
 
-    public int getPlayerInput() {
-        int choice = -1;
-        while (choice == -1) {
+    public int inputValidation(Scanner scanner) {
+        int input = 0;
+        boolean isValid = false;
+        while (!isValid) {
             System.out.println("Choose a square (1-9): ");
             if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                if (!isValidMove(choice)) {
-                    choice = -1;
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if (input < 1 || input > 9) {
+                    System.out.println("Invalid input. Please enter a valid number between 1 and 9.");
+                } else if (sQ[input - 1] == 'X' || sQ[input - 1] == 'O') {
+                    System.out.println("This square is already taken. Please choose another square, silly.");
+                } else {
+                    isValid = true;
                 }
-            }
-            else {
-                scanner.next();
+            } else {
                 System.out.println("Invalid input. Please enter a valid number between 1 and 9.");
+                scanner.nextLine();
             }
         }
-        return choice;
-    }
-
-    public boolean isValidMove(int choice) {
-        if (choice < 1 || choice > 9) {
-            System.out.println("Invalid input. Please choose a square between 1 and 9.");
-            return false;
-        }
-        if (sQ[choice - 1] == 'X' || sQ[choice - 1] == 'O') {
-            System.out.println("This square is already taken. Please choose another square, silly.");
-            return false;
-        }
-        return true;
+        return input;
     }
 
     public void makeMove(int choice, char player) {
@@ -73,9 +64,10 @@ public class Interface {
         return false;
     }
 
-    public boolean playAgain() {
+    public boolean playAgain(Scanner scanner) {
         System.out.println("Do you want to play again? (yes/no): ");
         String userInput = scanner.next().trim().toLowerCase();
+        scanner.nextLine();
         if (userInput.equals("yes")){
             resetBoard();
             System.out.println("Starting the next adventure...");
@@ -83,12 +75,11 @@ public class Interface {
         }
         else if (userInput.equals("no")){
             System.out.println("Have a beautiful day.");
-            scanner.close();
             return false;
         }
         else {
             System.out.println("Invalid response. Please enter 'yes' or 'no'.");
-            return playAgain();
+            return playAgain(scanner);
         }
     }
 
