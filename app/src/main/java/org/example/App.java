@@ -31,9 +31,9 @@ public class App {
         } else {
             System.out.print("Enter your name: ");
             String humanName = scanner.nextLine();
-            System.out.print("Do you want to go first? (yes/no): ");
+            System.out.print("Type 'first' to go first, or any other input to go second: ");
             String goesFirst = scanner.nextLine().trim().toLowerCase();
-            boolean humanFirst = goesFirst.equals("yes");
+            boolean humanFirst = goesFirst.equals("first");
             Game game = new Game(humanName, humanFirst);
             game.play();
         }
