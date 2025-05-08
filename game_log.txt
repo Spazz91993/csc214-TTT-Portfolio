@@ -1,6 +1,6 @@
 Tic-Tac-Toe Game Log
 ====================
-Player X (Player 1) Wins: 1
-Player O (Player 2) Wins: 1
+Player X (Computer) Wins: 1
+Player O (NICK) Wins: 0
 Ties: 0
 ====================
